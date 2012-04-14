@@ -1,0 +1,16 @@
+tests:
+    -   note: 'request geocode test'
+        url: 'http://maps.googleapis.com/maps/api/geocode/json'
+        method: 'GET'
+        requests:
+            address: '鎌倉市'
+            sensor: 'false'
+        options:
+            as:
+                -   'results#0#geometry#location->location0'
+        status: 200   
+        responses:
+            -   location0:
+                    lat: 35.3192254
+                    lng: 139.54668680
+
