@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 # ToGaki Command
 # togaki <yaml>
 # querying and verify in yaml
@@ -5,6 +6,7 @@
 import yaml
 import urllib
 import json
+import sys
 
 def as_return(params, as_path):
     (paths, name) = as_path.split('->')
@@ -45,10 +47,14 @@ def deep_ok(a, b, defpath=''):
 
 
 try:
-    f = open('twitter.yaml').read()
+    argv = sys.argv
+    if len(argv) <= 1:
+        exit('Usage: togaki.py <yaml-file>')
+    f = open(argv[1]).read()
     reqres = yaml.load(f)
-except IOError:
+except (IOError, yaml.scanner.ScannerError):
     print 'Error: file not found'
+    exit()
 
 for i, test in enumerate(reqres['tests']):
     print i+1, ':', test['note']
@@ -61,7 +67,7 @@ for i, test in enumerate(reqres['tests']):
     
     # status check
     if test.has_key('status'):
-        print res.info()
+        pass
     # response
     responses = json.loads(res.read())
     # as
@@ -75,9 +81,4 @@ for i, test in enumerate(reqres['tests']):
             print '  ' + 'subtest ' + str(i) + ' : ok'
         else:
             print '  ' + 'subtest ' + str(i) + ' : not ok'
-
-
-            
-    
-        
 
