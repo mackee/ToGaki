@@ -4,7 +4,6 @@
 # querying and verify in yaml
 
 import yaml
-import urllib2
 import urllib
 import json
 import sys
@@ -30,8 +29,9 @@ def deep_ok(a, b, defpath=''):
                 if isinstance(b_value, dict):
                     defpath += b_key+'#'
                     return deep_ok(a[b_key], b[b_key], defpath)
-                if a[b_key] != b_value:
-                    raise KeyError, ('mismatch', defpath+b_key, a[b_key], b_value)
+                else:
+                    if a[b_key] != b_value:
+                        raise KeyError, ('mismatch', defpath+b_key, a[b_key], b_value)
             else:
                 raise KeyError, ('mismatch', defpath+b_key, None, None, b_value)
     except KeyError, inst:
@@ -63,7 +63,7 @@ for i, test in enumerate(reqres['tests']):
     reqparam = [(k, v.encode('utf8')) for k, v in test['requests'].iteritems()]
     requests = urllib.urlencode(reqparam)
     url = test['url']+'?'+requests
-    res = urllib2.urlopen(url)
+    res = urllib.urlopen(url)
     
     # status check
     if test.has_key('status'):
