@@ -27,12 +27,11 @@ def deep_ok(a, b, defpath=''):
     try:
         for b_key, b_value in b.iteritems():
             if a.has_key(b_key):
-                if not isinstance(b_value, dict):
-                    if a[b_key] != b_value:
-                        raise KeyError, ('mismatch', defpath+b_key, a[b_key], b_value)
-                else:
+                if isinstance(b_value, dict):
                     defpath += b_key+'#'
                     return deep_ok(a[b_key], b[b_key], defpath)
+                if a[b_key] != b_value:
+                    raise KeyError, ('mismatch', defpath+b_key, a[b_key], b_value)
             else:
                 raise KeyError, ('mismatch', defpath+b_key, None, None, b_value)
     except KeyError, inst:
