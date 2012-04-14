@@ -4,6 +4,7 @@
 # querying and verify in yaml
 
 import yaml
+import urllib2
 import urllib
 import json
 import sys
@@ -63,7 +64,7 @@ for i, test in enumerate(reqres['tests']):
     reqparam = [(k, v.encode('utf8')) for k, v in test['requests'].iteritems()]
     requests = urllib.urlencode(reqparam)
     url = test['url']+'?'+requests
-    res = urllib.urlopen(url)
+    res = urllib2.urlopen(url)
     
     # status check
     if test.has_key('status'):
