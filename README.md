@@ -2,8 +2,10 @@
 ## About
 * Write A Test in YAML.
 * Easy Testing for JSON API
+
 ## Usage
     $ togaki.py sample/geocode.yaml
+
 ## TODO
 * テストを書く
 * ステータスコードの取得
