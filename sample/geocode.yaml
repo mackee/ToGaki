@@ -11,6 +11,6 @@ tests:
         status: 200   
         responses:
             -   location0:
-                    lat: 35.3192254
+                    lat: 35.319225
                     lng: 139.54668680
 
